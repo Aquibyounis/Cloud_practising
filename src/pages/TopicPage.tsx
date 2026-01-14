@@ -407,18 +407,18 @@ export default function TopicPage() {
             </GlassCard>
 
             {/* Navigation */}
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center justify-center gap-3">
                 {prevTopic ? (
-                    <Link to={`/topic/${prevTopic.slug}`} className="flex-1">
-                        <GlassCard className="flex items-center gap-3">
-                            <ChevronLeft className="w-5 h-5 text-dark-400" />
-                            <div>
-                                <div className="text-xs text-dark-500 dark:text-dark-400">Previous</div>
-                                <div className="font-medium text-dark-900 dark:text-white truncate">{prevTopic.title}</div>
-                            </div>
-                        </GlassCard>
+                    <Link to={`/topic/${prevTopic.slug}`}>
+                        <button className="p-3 rounded-xl bg-dark-100 dark:bg-dark-800 hover:bg-dark-200 dark:hover:bg-dark-700 transition-colors">
+                            <ChevronLeft className="w-6 h-6 text-dark-600 dark:text-dark-300" />
+                        </button>
                     </Link>
-                ) : <div className="flex-1" />}
+                ) : (
+                    <button className="p-3 rounded-xl bg-dark-100/50 dark:bg-dark-800/50 opacity-50 cursor-not-allowed">
+                        <ChevronLeft className="w-6 h-6 text-dark-400" />
+                    </button>
+                )}
 
                 {!progress?.completed && (
                     <Button onClick={handleMarkComplete} className="flex-shrink-0">
@@ -427,17 +427,24 @@ export default function TopicPage() {
                     </Button>
                 )}
 
+                {progress?.completed && (
+                    <div className="px-4 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-medium flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5" />
+                        Completed
+                    </div>
+                )}
+
                 {nextTopic ? (
-                    <Link to={`/topic/${nextTopic.slug}`} className="flex-1">
-                        <GlassCard className="flex items-center justify-end gap-3">
-                            <div className="text-right">
-                                <div className="text-xs text-dark-500 dark:text-dark-400">Next</div>
-                                <div className="font-medium text-dark-900 dark:text-white truncate">{nextTopic.title}</div>
-                            </div>
-                            <ChevronRight className="w-5 h-5 text-dark-400" />
-                        </GlassCard>
+                    <Link to={`/topic/${nextTopic.slug}`}>
+                        <button className="p-3 rounded-xl bg-dark-100 dark:bg-dark-800 hover:bg-dark-200 dark:hover:bg-dark-700 transition-colors">
+                            <ChevronRight className="w-6 h-6 text-dark-600 dark:text-dark-300" />
+                        </button>
                     </Link>
-                ) : <div className="flex-1" />}
+                ) : (
+                    <button className="p-3 rounded-xl bg-dark-100/50 dark:bg-dark-800/50 opacity-50 cursor-not-allowed">
+                        <ChevronRight className="w-6 h-6 text-dark-400" />
+                    </button>
+                )}
             </div>
         </div>
     );
