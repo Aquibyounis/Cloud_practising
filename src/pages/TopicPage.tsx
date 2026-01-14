@@ -94,19 +94,19 @@ export default function TopicPage() {
             .split('\n\n')
             .map((block, i) => {
                 if (block.startsWith('# ')) {
-                    return <h1 key={i} className="text-3xl font-display font-bold text-dark-900 dark:text-white mb-6 mt-10">{block.slice(2)}</h1>;
+                    return <h1 key={i} className="text-xl sm:text-2xl font-display font-bold text-dark-900 dark:text-white mb-4 mt-6">{block.slice(2)}</h1>;
                 }
                 if (block.startsWith('## ')) {
-                    return <h2 key={i} className="text-2xl font-display font-semibold text-dark-800 dark:text-dark-100 mb-4 mt-8">{block.slice(3)}</h2>;
+                    return <h2 key={i} className="text-lg sm:text-xl font-display font-semibold text-dark-800 dark:text-dark-100 mb-3 mt-5">{block.slice(3)}</h2>;
                 }
                 if (block.startsWith('### ')) {
-                    return <h3 key={i} className="text-xl font-display font-medium text-dark-700 dark:text-dark-200 mb-3 mt-6">{block.slice(4)}</h3>;
+                    return <h3 key={i} className="text-base sm:text-lg font-display font-medium text-dark-700 dark:text-dark-200 mb-2 mt-4">{block.slice(4)}</h3>;
                 }
                 if (block.startsWith('```')) {
                     const lines = block.split('\n');
                     const code = lines.slice(1, -1).join('\n');
                     return (
-                        <pre key={i} className="font-mono text-sm p-4 rounded-xl mb-4 overflow-x-auto bg-dark-900 text-dark-100">
+                        <pre key={i} className="font-mono text-xs sm:text-sm p-3 sm:p-4 rounded-xl mb-4 overflow-x-auto bg-dark-900 text-dark-100">
                             <code>{code}</code>
                         </pre>
                     );
@@ -114,12 +114,12 @@ export default function TopicPage() {
                 if (block.startsWith('|')) {
                     const rows = block.split('\n').filter(r => r.trim() && !r.includes('---'));
                     return (
-                        <div key={i} className="overflow-x-auto mb-4">
-                            <table className="w-full text-sm">
+                        <div key={i} className="overflow-x-auto mb-4 -mx-2 px-2">
+                            <table className="w-full text-xs sm:text-sm">
                                 <thead>
                                     <tr>
                                         {rows[0].split('|').filter(c => c.trim()).map((cell, ci) => (
-                                            <th key={ci} className="px-4 py-2 text-left font-medium bg-dark-100 dark:bg-dark-800">
+                                            <th key={ci} className="px-2 sm:px-4 py-2 text-left font-medium bg-dark-100 dark:bg-dark-800 whitespace-nowrap">
                                                 {cell.trim()}
                                             </th>
                                         ))}
@@ -129,7 +129,7 @@ export default function TopicPage() {
                                     {rows.slice(1).map((row, ri) => (
                                         <tr key={ri} className="border-b border-dark-100 dark:border-dark-700">
                                             {row.split('|').filter(c => c.trim()).map((cell, ci) => (
-                                                <td key={ci} className="px-4 py-2">{cell.trim()}</td>
+                                                <td key={ci} className="px-2 sm:px-4 py-2">{cell.trim()}</td>
                                             ))}
                                         </tr>
                                     ))}
@@ -141,9 +141,9 @@ export default function TopicPage() {
                 if (block.startsWith('- ') || block.startsWith('* ')) {
                     const items = block.split('\n');
                     return (
-                        <ul key={i} className="list-disc pl-6 mb-4 space-y-1">
+                        <ul key={i} className="list-disc pl-4 sm:pl-6 mb-4 space-y-1 text-sm sm:text-base">
                             {items.map((item, ii) => (
-                                <li key={ii}>{item.replace(/^[-*] /, '')}</li>
+                                <li key={ii} className="text-dark-700 dark:text-dark-200">{item.replace(/^[-*] /, '')}</li>
                             ))}
                         </ul>
                     );
@@ -151,14 +151,19 @@ export default function TopicPage() {
                 if (block.match(/^\d+\. /)) {
                     const items = block.split('\n');
                     return (
-                        <ol key={i} className="list-decimal pl-6 mb-4 space-y-1">
+                        <ol key={i} className="list-decimal pl-4 sm:pl-6 mb-4 space-y-1 text-sm sm:text-base">
                             {items.map((item, ii) => (
-                                <li key={ii}>{item.replace(/^\d+\. /, '')}</li>
+                                <li key={ii} className="text-dark-700 dark:text-dark-200">{item.replace(/^\d+\. /, '')}</li>
                             ))}
                         </ol>
                     );
                 }
-                return <p key={i} className="mb-4">{block}</p>;
+                // Handle bold text and inline formatting
+                const formattedBlock = block
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                    .replace(/`([^`]+)`/g, '<code class="bg-dark-100 dark:bg-dark-700 px-1 py-0.5 rounded text-xs sm:text-sm font-mono text-primary-600 dark:text-primary-400">$1</code>');
+                return <p key={i} className="mb-3 text-sm sm:text-base text-dark-700 dark:text-dark-200 leading-relaxed" dangerouslySetInnerHTML={{ __html: formattedBlock }} />;
             });
     };
 
