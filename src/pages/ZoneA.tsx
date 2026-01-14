@@ -116,36 +116,38 @@ export default function ZoneA() {
                         return (
                             <motion.div key={topic.id} variants={item}>
                                 <Link to={`/topic/${topic.slug}`}>
-                                    <GlassCard className="group flex items-center gap-4">
-                                        <div className={`
-                      w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg
+                                    <GlassCard className="group">
+                                        <div className="flex items-start sm:items-center gap-3 sm:gap-4">
+                                            <div className={`
+                      w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-base sm:text-lg flex-shrink-0
                       ${isCompleted
-                                                ? 'bg-emerald-500 text-white'
-                                                : 'bg-dark-100 dark:bg-dark-700 text-dark-500 dark:text-dark-400'
-                                            }
+                                                    ? 'bg-emerald-500 text-white'
+                                                    : 'bg-dark-100 dark:bg-dark-700 text-dark-500 dark:text-dark-400'
+                                                }
                     `}>
-                                            {isCompleted ? <CheckCircle className="w-5 h-5" /> : index + 1}
-                                        </div>
-
-                                        <div className="flex-1 min-w-0">
-                                            <h3 className="font-semibold text-dark-900 dark:text-white truncate group-hover:text-primary-500 transition-colors">
-                                                {topic.title}
-                                            </h3>
-                                            <p className="text-sm text-dark-500 dark:text-dark-400 truncate">
-                                                {topic.description}
-                                            </p>
-                                        </div>
-
-                                        <div className="flex items-center gap-4 text-sm text-dark-500 dark:text-dark-400">
-                                            <div className="flex items-center gap-1">
-                                                <Clock className="w-4 h-4" />
-                                                <span>{topic.estimatedTime} min</span>
+                                                {isCompleted ? <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" /> : index + 1}
                                             </div>
-                                            <div className="flex items-center gap-1">
-                                                <Target className="w-4 h-4" />
-                                                <span>{topic.mcqs.length} MCQs</span>
+
+                                            <div className="flex-1 min-w-0">
+                                                <h3 className="font-semibold text-sm sm:text-base text-dark-900 dark:text-white group-hover:text-primary-500 transition-colors">
+                                                    {topic.title}
+                                                </h3>
+                                                <p className="text-xs sm:text-sm text-dark-500 dark:text-dark-400 line-clamp-2">
+                                                    {topic.description}
+                                                </p>
                                             </div>
-                                            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+
+                                            <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-dark-500 dark:text-dark-400 flex-shrink-0">
+                                                <div className="hidden sm:flex items-center gap-1">
+                                                    <Clock className="w-4 h-4" />
+                                                    <span>{topic.estimatedTime} min</span>
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <Target className="w-4 h-4" />
+                                                    <span>{topic.mcqs.length} MCQs</span>
+                                                </div>
+                                                <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                                            </div>
                                         </div>
                                     </GlassCard>
                                 </Link>
